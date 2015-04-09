@@ -1,0 +1,68 @@
+{
+  "@id": "http://example.org/gov.uk/schema/junior-roles.json",
+  "@context": "http://www.w3.org/ns/csvw",
+  "columns": [{
+    "name": "reportsToSenior",
+    "title": "Reporting Senior Post",
+    "datatype": "string",
+    "propertyUrl": "org:reportsTo",
+    "valueUrl": "http://example.org/organization/{organizationRef}/post/{reportsToSenior}",
+    "required": true
+  }, {
+    "name": "grade",
+    "title": "Grade",
+    "datatype": "string",
+    "propertyUrl": "http://example.org/gov.uk/def/grade"
+  }, {
+    "name": "min_pay",
+    "title": "Payscale Minimum (£)",
+    "datatype": "integer",
+    "propertyUrl": "http://example.org/gov.uk/def/min_pay"
+  }, {
+    "name": "max_pay",
+    "title": "Payscale Maximum (£)",
+    "datatype": "integer",
+    "propertyUrl": "http://example.org/gov.uk/def/max_pay"
+  }, {
+    "name": "job",
+    "title": "Generic Job Title",
+    "datatype": "string",
+    "propertyUrl": "http://example.org/gov.uk/def/job"
+  }, {
+    "name": "number",
+    "title": "Number of Posts (FTE)",
+    "datatype": "number",
+    "propertyUrl": "http://example.org/gov.uk/def/number_of_posts" 
+  }, {
+    "name": "profession",
+    "title": "Profession",
+    "datatype": "string",
+    "propertyUrl": "http://example.org/gov.uk/def/profession"
+  }, {
+    "name": "organizationRef",
+    "title": "Organization Reference",
+    "datatype": "string",
+    "propertyUrl": "org:postIn",
+    "valueUrl": "http://example.org/organization/{organizationRef}",
+    "required": true
+  }],
+  "foreignKeys": [{
+    "columnReference": "reportsToSenior",
+    "reference": {
+      "schemaReference": "http://example.org/gov.uk/schema/senior-roles.json",
+      "columnReference": "ref"
+    }
+  }, {
+    "columns": "profession",
+    "reference": {
+      "schemaReference": "http://example.org/gov.uk/schema/professions.json",
+      "columns": "name"
+    }
+  }, {
+    "columns": "organizationRef",
+    "reference": {
+      "schemaReference": "http://example.org/gov.uk/schema/organizations.json",
+      "columns": "ref"
+    }
+  }]
+}
