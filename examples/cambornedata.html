@@ -18,7 +18,23 @@
 		<p typeof="schema:Dataset"><a property="schema:url" typeof="schema:DataDownload" href="cambornedata-snippet.csv">cambornedata-snippet.csv</a></p>
 		<script type="application/ld+json">
 			{
-			  "@context": ["http://www.w3.org/ns/csvw", {"@language": "en"}],
+			  "@context": ["http://www.w3.org/ns/csvw", 
+			  	{
+			  		"@vocab": "http://www.w3.org/ns/csvw#",
+			  		"@language": "en", 
+			  		"schema": "http://schema.org/",
+			  		"geo": "http://www.w3.org/2003/01/geo/wgs84_pos#",
+			  		"qb": "http://purl.org/linked-data/cube#",
+			  		"owl": "http://www.w3.org/2002/07/owl#",
+			  		"rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+			  		"xsd": "http://www.w3.org/2001/XMLSchema#",
+			  		"skos": "http://www.w3.org/2004/02/skos/core#",
+			  		"rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+			  		"dcat": "http://www.w3.org/ns/dcat#",
+			  		"prov": "http://www.w3.org/ns/prov#",
+			  		"csvw": "http://www.w3.org/ns/csvw#",
+			  		"dc": "http://purl.org/dc/terms/"
+			  	}],
 			  "@id": "http://example.org/cambornedata",
 			  "@type": "Table",
 			  "url": "cambornedata-snippet.csv",
