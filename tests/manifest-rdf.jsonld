@@ -1167,7 +1167,7 @@
     },
     {
       "id": "manifest-rdf#test100",
-      "type": "csvt:NegativeRdfTest",
+      "type": "csvt:ToRdfTestWithWarnings",
       "name": "inconsistent array values: columns",
       "comment": "If the supplied value of an array property is not an array (eg if it is an integer), compliant applications MUST issue a warning and proceed as if the property had been supplied with an empty array",
       "approval": "rdft:Approved",
@@ -1175,6 +1175,7 @@
         "noProv": true
       },
       "action": "test100-metadata.json",
+      "result": "test100.ttl",
       "implicit": [
         "tree-ops.csv"
       ]
@@ -1499,7 +1500,7 @@
     },
     {
       "id": "manifest-rdf#test122",
-      "type": "csvt:ToRdfTest",
+      "type": "csvt:ToRdfTestWithWarnings",
       "name": "link-metadata not describing file uses file-metadata",
       "comment": "If the metadata file found at this location does not explicitly include a reference to the requested tabular data file then it MUST be ignored.",
       "approval": "rdft:Approved",
@@ -1516,7 +1517,7 @@
     },
     {
       "id": "manifest-rdf#test123",
-      "type": "csvt:ToRdfTest",
+      "type": "csvt:ToRdfTestWithWarnings",
       "name": "file-metadata not describing file uses directory-metadata",
       "comment": "If the metadata file found at this location does not explicitly include a reference to the requested tabular data file then it MUST be ignored.",
       "approval": "rdft:Approved",
@@ -3406,6 +3407,664 @@
       "action": "test261-metadata.json",
       "implicit": [
         "test261.csv"
+      ]
+    },
+    {
+      "id": "manifest-rdf#test263",
+      "type": "csvt:ToRdfTest",
+      "name": "@type on a common property can be a built-in type",
+      "comment": "The value of any member of `@type` MUST be either a _term_ defined in [csvw-context], a _prefixed name_ where the prefix is a term defined in [csvw-context], or an absolute URL.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test263-metadata.json",
+      "result": "test263.ttl",
+      "implicit": [
+        "tree-ops.csv"
+      ]
+    },
+    {
+      "id": "manifest-rdf#test264",
+      "type": "csvt:ToRdfTest",
+      "name": "@type on a common property can be a CURIE if the prefix is one of the built-in ones",
+      "comment": "The value of any member of `@type` MUST be either a _term_ defined in [csvw-context], a _prefixed name_ where the prefix is a term defined in [csvw-context], or an absolute URL.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test264-metadata.json",
+      "result": "test264.ttl",
+      "implicit": [
+        "tree-ops.csv"
+      ]
+    },
+    {
+      "id": "manifest-rdf#test266",
+      "type": "csvt:ToRdfTestWithWarnings",
+      "name": "`null` contains an array of (valid) string & (invalid) numeric values",
+      "comment": "Processors MUST issue a warning if a property is set to an invalid value type",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test266-metadata.json",
+      "result": "test266.ttl",
+      "implicit": [
+        "tree-ops.csv"
+      ]
+    },
+    {
+      "id": "manifest-rdf#test267",
+      "type": "csvt:NegativeRdfTest",
+      "name": "@id on datatype is invalid (eg starts with _:)",
+      "comment": "It MUST NOT start with `_:` and it MUST NOT be the URL of a built-in datatype.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test267-metadata.json",
+      "implicit": [
+        "tree-ops.csv"
+      ]
+    },
+    {
+      "id": "manifest-rdf#test268",
+      "type": "csvt:ToRdfTest",
+      "name": "`base` missing on datatype (defaults to string)",
+      "comment": "An atomic property that contains a single string: the name of one of the built-in datatypes, as listed above (and which are defined as terms in the default context). Its default is string.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test268-metadata.json",
+      "result": "test268.ttl",
+      "implicit": [
+        "tree-ops.csv"
+      ]
+    },
+    {
+      "id": "manifest-rdf#test269",
+      "type": "csvt:ToRdfTestWithWarnings",
+      "name": "`format` for a boolean datatype is a string but in the wrong form (eg YN)",
+      "comment": "If the datatype base for a cell is `boolean`, the datatype format annotation provides the true value followed by the false value, separated by `|`. If the format does not follow this syntax, implementations MUST issue a warning and proceed as if no format had been provided.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test269-metadata.json",
+      "result": "test269.ttl",
+      "implicit": [
+        "test269.csv"
+      ]
+    },
+    {
+      "id": "manifest-rdf#test270",
+      "type": "csvt:ToRdfTestWithWarnings",
+      "name": "transformation includes an invalid property (eg foo)",
+      "comment": "All terms used within a metadata document MUST be defined in [csvw-context] defined for this specification",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test270-metadata.json",
+      "result": "test270.ttl",
+      "implicit": [
+        "tree-ops.csv"
+      ]
+    },
+    {
+      "id": "manifest-rdf#test271",
+      "type": "csvt:NegativeRdfTest",
+      "name": "foreign key includes an invalid property (eg `dc:description`)",
+      "comment": "A foreign key definition is a JSON object that must contain only the following properties. . .",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test271-metadata.json",
+      "implicit": [
+        "test271.csv",
+        "countries.csv"
+      ]
+    },
+    {
+      "id": "manifest-rdf#test272",
+      "type": "csvt:NegativeRdfTest",
+      "name": "foreign key reference includes an invalid property (eg `dc:description`)",
+      "comment": "A foreign key definition is a JSON object that must contain only the following properties. . .",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test272-metadata.json",
+      "implicit": [
+        "test272.csv",
+        "countries.csv"
+      ]
+    },
+    {
+      "id": "manifest-rdf#test273",
+      "type": "csvt:ToRdfTest",
+      "name": "`@base` set in `@context` overriding eg CSV location",
+      "comment": "If present, its value MUST be a string that is interpreted as a URL which is resolved against the location of the metadata document to provide the **base URL** for other URLs in the metadata document.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test273-metadata.json",
+      "result": "test273.ttl",
+      "implicit": [
+        "test273/action.csv"
+      ]
+    },
+    {
+      "id": "manifest-rdf#test274",
+      "type": "csvt:NegativeRdfTest",
+      "name": "`@context` object includes properties other than `@base` and `@language`",
+      "comment": "The `@context` MUST have one of the following values: An array composed of a string followed by an object, where the string is `http://www.w3.org/ns/csvw` and the object represents a local context definition, which is restricted to contain either or both of the following members.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test274-metadata.json",
+      "implicit": [
+        "tree-ops.csv"
+      ]
+    },
+    {
+      "id": "manifest-rdf#test275",
+      "type": "csvt:ToRdfTestWithWarnings",
+      "name": "property acceptable on column appears on table group",
+      "comment": "Table Group may only use defined properties.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test275-metadata.json",
+      "result": "test275.ttl",
+      "implicit": [
+        "tree-ops.csv"
+      ]
+    },
+    {
+      "id": "manifest-rdf#test276",
+      "type": "csvt:ToRdfTestWithWarnings",
+      "name": "property acceptable on column appears on table",
+      "comment": "Table may only use defined properties.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test276-metadata.json",
+      "result": "test276.ttl",
+      "implicit": [
+        "tree-ops.csv"
+      ]
+    },
+    {
+      "id": "manifest-rdf#test277",
+      "type": "csvt:ToRdfTestWithWarnings",
+      "name": "property acceptable on table appears on column",
+      "comment": "Column may only use defined properties.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test277-metadata.json",
+      "result": "test277.ttl",
+      "implicit": [
+        "tree-ops.csv"
+      ]
+    },
+    {
+      "id": "manifest-rdf#test278",
+      "type": "csvt:ToRdfTestWithWarnings",
+      "name": "CSV has more headers than there are columns in the metadata",
+      "comment": "Two schemas are compatible if they have the same number of non-virtual column descriptions, and the non-virtual column descriptions at the same index within each are compatible with each other.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test278-metadata.json",
+      "result": "test278.ttl",
+      "implicit": [
+        "tree-ops.csv"
+      ]
+    },
+    {
+      "id": "manifest-rdf#test279",
+      "type": "csvt:ToRdfTestWithWarnings",
+      "name": "duration not matching xsd pattern",
+      "comment": "Value MUST be a valid xsd:duration.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test279-metadata.json",
+      "result": "test279.ttl",
+      "implicit": [
+        "test279.csv"
+      ]
+    },
+    {
+      "id": "manifest-rdf#test280",
+      "type": "csvt:ToRdfTestWithWarnings",
+      "name": "dayTimeDuration not matching xsd pattern",
+      "comment": "Value MUST be a valid xsd:dayTimeDuration.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test280-metadata.json",
+      "result": "test280.ttl",
+      "implicit": [
+        "test280.csv"
+      ]
+    },
+    {
+      "id": "manifest-rdf#test281",
+      "type": "csvt:ToRdfTestWithWarnings",
+      "name": "yearMonthDuration not matching xsd pattern",
+      "comment": "Value MUST be a valid xsd:yearMonthDuration.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test281-metadata.json",
+      "result": "test281.ttl",
+      "implicit": [
+        "test281.csv"
+      ]
+    },
+    {
+      "id": "manifest-rdf#test282",
+      "type": "csvt:ToRdfTest",
+      "name": "valid number patterns",
+      "comment": "A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test282-metadata.json",
+      "result": "test282.ttl",
+      "implicit": [
+        "test282.csv"
+      ]
+    },
+    {
+      "id": "manifest-rdf#test283",
+      "type": "csvt:ToRdfTest",
+      "name": "valid number patterns (signs and percent/permille)",
+      "comment": "A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test283-metadata.json",
+      "result": "test283.ttl",
+      "implicit": [
+        "test283.csv"
+      ]
+    },
+    {
+      "id": "manifest-rdf#test284",
+      "type": "csvt:ToRdfTest",
+      "name": "valid number patterns (grouping)",
+      "comment": "A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test284-metadata.json",
+      "result": "test284.ttl",
+      "implicit": [
+        "test284.csv"
+      ]
+    },
+    {
+      "id": "manifest-rdf#test285",
+      "type": "csvt:ToRdfTest",
+      "name": "valid number patterns (fractional grouping)",
+      "comment": "A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test285-metadata.json",
+      "result": "test285.ttl",
+      "implicit": [
+        "test285.csv"
+      ]
+    },
+    {
+      "id": "manifest-rdf#test286",
+      "type": "csvt:ToRdfTestWithWarnings",
+      "name": "invalid ##0 1,234",
+      "comment": "A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test286-metadata.json",
+      "result": "test286.ttl",
+      "implicit": [
+        "test286.csv"
+      ]
+    },
+    {
+      "id": "manifest-rdf#test287",
+      "type": "csvt:ToRdfTestWithWarnings",
+      "name": "invalid ##0 123.4",
+      "comment": "A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test287-metadata.json",
+      "result": "test287.ttl",
+      "implicit": [
+        "test287.csv"
+      ]
+    },
+    {
+      "id": "manifest-rdf#test288",
+      "type": "csvt:ToRdfTestWithWarnings",
+      "name": "invalid #,#00 1",
+      "comment": "A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test288-metadata.json",
+      "result": "test288.ttl",
+      "implicit": [
+        "test288.csv"
+      ]
+    },
+    {
+      "id": "manifest-rdf#test289",
+      "type": "csvt:ToRdfTestWithWarnings",
+      "name": "invalid #,#00 1234",
+      "comment": "A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test289-metadata.json",
+      "result": "test289.ttl",
+      "implicit": [
+        "test289.csv"
+      ]
+    },
+    {
+      "id": "manifest-rdf#test290",
+      "type": "csvt:ToRdfTestWithWarnings",
+      "name": "invalid #,#00 12,34",
+      "comment": "A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test290-metadata.json",
+      "result": "test290.ttl",
+      "implicit": [
+        "test290.csv"
+      ]
+    },
+    {
+      "id": "manifest-rdf#test291",
+      "type": "csvt:ToRdfTestWithWarnings",
+      "name": "invalid #,#00 12,34,567",
+      "comment": "A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test291-metadata.json",
+      "result": "test291.ttl",
+      "implicit": [
+        "test291.csv"
+      ]
+    },
+    {
+      "id": "manifest-rdf#test292",
+      "type": "csvt:ToRdfTestWithWarnings",
+      "name": "invalid #,##,#00 1",
+      "comment": "A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test292-metadata.json",
+      "result": "test292.ttl",
+      "implicit": [
+        "test292.csv"
+      ]
+    },
+    {
+      "id": "manifest-rdf#test293",
+      "type": "csvt:ToRdfTestWithWarnings",
+      "name": "invalid #,##,#00 1234",
+      "comment": "A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test293-metadata.json",
+      "result": "test293.ttl",
+      "implicit": [
+        "test293.csv"
+      ]
+    },
+    {
+      "id": "manifest-rdf#test294",
+      "type": "csvt:ToRdfTestWithWarnings",
+      "name": "invalid #,##,#00 12,34",
+      "comment": "A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test294-metadata.json",
+      "result": "test294.ttl",
+      "implicit": [
+        "test294.csv"
+      ]
+    },
+    {
+      "id": "manifest-rdf#test295",
+      "type": "csvt:ToRdfTestWithWarnings",
+      "name": "invalid #,##,#00 1,234,567",
+      "comment": "A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test295-metadata.json",
+      "result": "test295.ttl",
+      "implicit": [
+        "test295.csv"
+      ]
+    },
+    {
+      "id": "manifest-rdf#test296",
+      "type": "csvt:ToRdfTestWithWarnings",
+      "name": "invalid #0.# 12.34",
+      "comment": "A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test296-metadata.json",
+      "result": "test296.ttl",
+      "implicit": [
+        "test296.csv"
+      ]
+    },
+    {
+      "id": "manifest-rdf#test297",
+      "type": "csvt:ToRdfTestWithWarnings",
+      "name": "invalid #0.# 1,234.5",
+      "comment": "A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test297-metadata.json",
+      "result": "test297.ttl",
+      "implicit": [
+        "test297.csv"
+      ]
+    },
+    {
+      "id": "manifest-rdf#test298",
+      "type": "csvt:ToRdfTestWithWarnings",
+      "name": "invalid #0.0 1",
+      "comment": "A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test298-metadata.json",
+      "result": "test298.ttl",
+      "implicit": [
+        "test298.csv"
+      ]
+    },
+    {
+      "id": "manifest-rdf#test299",
+      "type": "csvt:ToRdfTestWithWarnings",
+      "name": "invalid #0.0 12.34",
+      "comment": "A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test299-metadata.json",
+      "result": "test299.ttl",
+      "implicit": [
+        "test299.csv"
+      ]
+    },
+    {
+      "id": "manifest-rdf#test300",
+      "type": "csvt:ToRdfTestWithWarnings",
+      "name": "invalid #0.0# 1",
+      "comment": "A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test300-metadata.json",
+      "result": "test300.ttl",
+      "implicit": [
+        "test300.csv"
+      ]
+    },
+    {
+      "id": "manifest-rdf#test301",
+      "type": "csvt:ToRdfTestWithWarnings",
+      "name": "invalid #0.0# 12.345",
+      "comment": "A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test301-metadata.json",
+      "result": "test301.ttl",
+      "implicit": [
+        "test301.csv"
+      ]
+    },
+    {
+      "id": "manifest-rdf#test302",
+      "type": "csvt:ToRdfTestWithWarnings",
+      "name": "invalid #0.0#,# 1",
+      "comment": "A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test302-metadata.json",
+      "result": "test302.ttl",
+      "implicit": [
+        "test302.csv"
+      ]
+    },
+    {
+      "id": "manifest-rdf#test303",
+      "type": "csvt:ToRdfTestWithWarnings",
+      "name": "invalid #0.0#,# 12.345",
+      "comment": "A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test303-metadata.json",
+      "result": "test303.ttl",
+      "implicit": [
+        "test303.csv"
+      ]
+    },
+    {
+      "id": "manifest-rdf#test304",
+      "type": "csvt:ToRdfTestWithWarnings",
+      "name": "invalid #0.0#,# 12.34,567",
+      "comment": "A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test304-metadata.json",
+      "result": "test304.ttl",
+      "implicit": [
+        "test304.csv"
+      ]
+    },
+    {
+      "id": "manifest-rdf#test305",
+      "type": "csvt:ToRdfTest",
+      "name": "multiple values with same subject and property (unordered)",
+      "comment": "Values in separate columns using the same propertyUrl are kept in proper relative order.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test305-metadata.json",
+      "result": "test305.ttl",
+      "implicit": [
+        "test305.csv"
+      ]
+    },
+    {
+      "id": "manifest-rdf#test306",
+      "type": "csvt:ToRdfTest",
+      "name": "multiple values with same subject and property (ordered)",
+      "comment": "Values in separate columns using the same propertyUrl are kept in proper relative order.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test306-metadata.json",
+      "result": "test306.ttl",
+      "implicit": [
+        "test306.csv"
+      ]
+    },
+    {
+      "id": "manifest-rdf#test307",
+      "type": "csvt:ToRdfTest",
+      "name": "multiple values with same subject and property (ordered and unordered)",
+      "comment": "Values in separate columns using the same propertyUrl are kept in proper relative order.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test307-metadata.json",
+      "result": "test307.ttl",
+      "implicit": [
+        "test307.csv"
       ]
     }
   ]

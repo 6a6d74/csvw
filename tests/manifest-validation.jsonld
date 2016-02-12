@@ -1464,7 +1464,7 @@
     },
     {
       "id": "manifest-validation#test122",
-      "type": "csvt:PositiveValidationTest",
+      "type": "csvt:WarningValidationTest",
       "name": "link-metadata not describing file uses file-metadata",
       "comment": "If the metadata file found at this location does not explicitly include a reference to the requested tabular data file then it MUST be ignored.",
       "approval": "rdft:Approved",
@@ -1480,7 +1480,7 @@
     },
     {
       "id": "manifest-validation#test123",
-      "type": "csvt:PositiveValidationTest",
+      "type": "csvt:WarningValidationTest",
       "name": "file-metadata not describing file uses directory-metadata",
       "comment": "If the metadata file found at this location does not explicitly include a reference to the requested tabular data file then it MUST be ignored.",
       "approval": "rdft:Approved",
@@ -3393,6 +3393,638 @@
       "action": "test261-metadata.json",
       "implicit": [
         "test261.csv"
+      ]
+    },
+    {
+      "id": "manifest-validation#test263",
+      "type": "csvt:PositiveValidationTest",
+      "name": "@type on a common property can be a built-in type",
+      "comment": "The value of any member of `@type` MUST be either a _term_ defined in [csvw-context], a _prefixed name_ where the prefix is a term defined in [csvw-context], or an absolute URL.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test263-metadata.json",
+      "implicit": [
+        "tree-ops.csv"
+      ]
+    },
+    {
+      "id": "manifest-validation#test264",
+      "type": "csvt:PositiveValidationTest",
+      "name": "@type on a common property can be a CURIE if the prefix is one of the built-in ones",
+      "comment": "The value of any member of `@type` MUST be either a _term_ defined in [csvw-context], a _prefixed name_ where the prefix is a term defined in [csvw-context], or an absolute URL.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test264-metadata.json",
+      "implicit": [
+        "tree-ops.csv"
+      ]
+    },
+    {
+      "id": "manifest-validation#test266",
+      "type": "csvt:WarningValidationTest",
+      "name": "`null` contains an array of (valid) string & (invalid) numeric values",
+      "comment": "Processors MUST issue a warning if a property is set to an invalid value type",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test266-metadata.json",
+      "implicit": [
+        "tree-ops.csv"
+      ]
+    },
+    {
+      "id": "manifest-validation#test267",
+      "type": "csvt:NegativeValidationTest",
+      "name": "@id on datatype is invalid (eg starts with _:)",
+      "comment": "It MUST NOT start with `_:` and it MUST NOT be the URL of a built-in datatype.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test267-metadata.json",
+      "implicit": [
+        "tree-ops.csv"
+      ]
+    },
+    {
+      "id": "manifest-validation#test268",
+      "type": "csvt:PositiveValidationTest",
+      "name": "`base` missing on datatype (defaults to string)",
+      "comment": "An atomic property that contains a single string: the name of one of the built-in datatypes, as listed above (and which are defined as terms in the default context). Its default is string.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test268-metadata.json",
+      "implicit": [
+        "tree-ops.csv"
+      ]
+    },
+    {
+      "id": "manifest-validation#test269",
+      "type": "csvt:NegativeValidationTest",
+      "name": "`format` for a boolean datatype is a string but in the wrong form (eg YN)",
+      "comment": "If the datatype base for a cell is `boolean`, the datatype format annotation provides the true value followed by the false value, separated by `|`. If the format does not follow this syntax, implementations MUST issue a warning and proceed as if no format had been provided.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test269-metadata.json",
+      "implicit": [
+        "test269.csv"
+      ]
+    },
+    {
+      "id": "manifest-validation#test270",
+      "type": "csvt:WarningValidationTest",
+      "name": "transformation includes an invalid property (eg foo)",
+      "comment": "All terms used within a metadata document MUST be defined in [csvw-context] defined for this specification",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test270-metadata.json",
+      "implicit": [
+        "tree-ops.csv"
+      ]
+    },
+    {
+      "id": "manifest-validation#test271",
+      "type": "csvt:NegativeValidationTest",
+      "name": "foreign key includes an invalid property (eg `dc:description`)",
+      "comment": "A foreign key definition is a JSON object that must contain only the following properties. . .",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test271-metadata.json",
+      "implicit": [
+        "test271.csv",
+        "countries.csv"
+      ]
+    },
+    {
+      "id": "manifest-validation#test272",
+      "type": "csvt:NegativeValidationTest",
+      "name": "foreign key reference includes an invalid property (eg `dc:description`)",
+      "comment": "A foreign key definition is a JSON object that must contain only the following properties. . .",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test272-metadata.json",
+      "implicit": [
+        "test272.csv",
+        "countries.csv"
+      ]
+    },
+    {
+      "id": "manifest-validation#test273",
+      "type": "csvt:PositiveValidationTest",
+      "name": "`@base` set in `@context` overriding eg CSV location",
+      "comment": "If present, its value MUST be a string that is interpreted as a URL which is resolved against the location of the metadata document to provide the **base URL** for other URLs in the metadata document.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test273-metadata.json",
+      "implicit": [
+        "test273/action.csv"
+      ]
+    },
+    {
+      "id": "manifest-validation#test274",
+      "type": "csvt:NegativeValidationTest",
+      "name": "`@context` object includes properties other than `@base` and `@language`",
+      "comment": "The `@context` MUST have one of the following values: An array composed of a string followed by an object, where the string is `http://www.w3.org/ns/csvw` and the object represents a local context definition, which is restricted to contain either or both of the following members.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test274-metadata.json",
+      "implicit": [
+        "tree-ops.csv"
+      ]
+    },
+    {
+      "id": "manifest-validation#test275",
+      "type": "csvt:WarningValidationTest",
+      "name": "property acceptable on column appears on table group",
+      "comment": "Table Group may only use defined properties.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test275-metadata.json",
+      "implicit": [
+        "tree-ops.csv"
+      ]
+    },
+    {
+      "id": "manifest-validation#test276",
+      "type": "csvt:WarningValidationTest",
+      "name": "property acceptable on column appears on table",
+      "comment": "Table may only use defined properties.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test276-metadata.json",
+      "implicit": [
+        "tree-ops.csv"
+      ]
+    },
+    {
+      "id": "manifest-validation#test277",
+      "type": "csvt:WarningValidationTest",
+      "name": "property acceptable on table appears on column",
+      "comment": "Column may only use defined properties.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test277-metadata.json",
+      "implicit": [
+        "tree-ops.csv"
+      ]
+    },
+    {
+      "id": "manifest-validation#test278",
+      "type": "csvt:NegativeValidationTest",
+      "name": "CSV has more headers than there are columns in the metadata",
+      "comment": "Two schemas are compatible if they have the same number of non-virtual column descriptions, and the non-virtual column descriptions at the same index within each are compatible with each other.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test278-metadata.json",
+      "implicit": [
+        "tree-ops.csv"
+      ]
+    },
+    {
+      "id": "manifest-validation#test279",
+      "type": "csvt:NegativeValidationTest",
+      "name": "duration not matching xsd pattern",
+      "comment": "Value MUST be a valid xsd:duration.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test279-metadata.json",
+      "implicit": [
+        "test279.csv"
+      ]
+    },
+    {
+      "id": "manifest-validation#test280",
+      "type": "csvt:NegativeValidationTest",
+      "name": "dayTimeDuration not matching xsd pattern",
+      "comment": "Value MUST be a valid xsd:dayTimeDuration.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test280-metadata.json",
+      "implicit": [
+        "test280.csv"
+      ]
+    },
+    {
+      "id": "manifest-validation#test281",
+      "type": "csvt:NegativeValidationTest",
+      "name": "yearMonthDuration not matching xsd pattern",
+      "comment": "Value MUST be a valid xsd:yearMonthDuration.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test281-metadata.json",
+      "implicit": [
+        "test281.csv"
+      ]
+    },
+    {
+      "id": "manifest-validation#test282",
+      "type": "csvt:PositiveValidationTest",
+      "name": "valid number patterns",
+      "comment": "A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test282-metadata.json",
+      "implicit": [
+        "test282.csv"
+      ]
+    },
+    {
+      "id": "manifest-validation#test283",
+      "type": "csvt:PositiveValidationTest",
+      "name": "valid number patterns (signs and percent/permille)",
+      "comment": "A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test283-metadata.json",
+      "implicit": [
+        "test283.csv"
+      ]
+    },
+    {
+      "id": "manifest-validation#test284",
+      "type": "csvt:PositiveValidationTest",
+      "name": "valid number patterns (grouping)",
+      "comment": "A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test284-metadata.json",
+      "implicit": [
+        "test284.csv"
+      ]
+    },
+    {
+      "id": "manifest-validation#test285",
+      "type": "csvt:PositiveValidationTest",
+      "name": "valid number patterns (fractional grouping)",
+      "comment": "A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test285-metadata.json",
+      "implicit": [
+        "test285.csv"
+      ]
+    },
+    {
+      "id": "manifest-validation#test286",
+      "type": "csvt:NegativeValidationTest",
+      "name": "invalid ##0 1,234",
+      "comment": "A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test286-metadata.json",
+      "implicit": [
+        "test286.csv"
+      ]
+    },
+    {
+      "id": "manifest-validation#test287",
+      "type": "csvt:NegativeValidationTest",
+      "name": "invalid ##0 123.4",
+      "comment": "A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test287-metadata.json",
+      "implicit": [
+        "test287.csv"
+      ]
+    },
+    {
+      "id": "manifest-validation#test288",
+      "type": "csvt:NegativeValidationTest",
+      "name": "invalid #,#00 1",
+      "comment": "A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test288-metadata.json",
+      "implicit": [
+        "test288.csv"
+      ]
+    },
+    {
+      "id": "manifest-validation#test289",
+      "type": "csvt:NegativeValidationTest",
+      "name": "invalid #,#00 1234",
+      "comment": "A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test289-metadata.json",
+      "implicit": [
+        "test289.csv"
+      ]
+    },
+    {
+      "id": "manifest-validation#test290",
+      "type": "csvt:NegativeValidationTest",
+      "name": "invalid #,#00 12,34",
+      "comment": "A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test290-metadata.json",
+      "implicit": [
+        "test290.csv"
+      ]
+    },
+    {
+      "id": "manifest-validation#test291",
+      "type": "csvt:NegativeValidationTest",
+      "name": "invalid #,#00 12,34,567",
+      "comment": "A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test291-metadata.json",
+      "implicit": [
+        "test291.csv"
+      ]
+    },
+    {
+      "id": "manifest-validation#test292",
+      "type": "csvt:NegativeValidationTest",
+      "name": "invalid #,##,#00 1",
+      "comment": "A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test292-metadata.json",
+      "implicit": [
+        "test292.csv"
+      ]
+    },
+    {
+      "id": "manifest-validation#test293",
+      "type": "csvt:NegativeValidationTest",
+      "name": "invalid #,##,#00 1234",
+      "comment": "A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test293-metadata.json",
+      "implicit": [
+        "test293.csv"
+      ]
+    },
+    {
+      "id": "manifest-validation#test294",
+      "type": "csvt:NegativeValidationTest",
+      "name": "invalid #,##,#00 12,34",
+      "comment": "A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test294-metadata.json",
+      "implicit": [
+        "test294.csv"
+      ]
+    },
+    {
+      "id": "manifest-validation#test295",
+      "type": "csvt:NegativeValidationTest",
+      "name": "invalid #,##,#00 1,234,567",
+      "comment": "A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test295-metadata.json",
+      "implicit": [
+        "test295.csv"
+      ]
+    },
+    {
+      "id": "manifest-validation#test296",
+      "type": "csvt:NegativeValidationTest",
+      "name": "invalid #0.# 12.34",
+      "comment": "A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test296-metadata.json",
+      "implicit": [
+        "test296.csv"
+      ]
+    },
+    {
+      "id": "manifest-validation#test297",
+      "type": "csvt:NegativeValidationTest",
+      "name": "invalid #0.# 1,234.5",
+      "comment": "A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test297-metadata.json",
+      "implicit": [
+        "test297.csv"
+      ]
+    },
+    {
+      "id": "manifest-validation#test298",
+      "type": "csvt:NegativeValidationTest",
+      "name": "invalid #0.0 1",
+      "comment": "A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test298-metadata.json",
+      "implicit": [
+        "test298.csv"
+      ]
+    },
+    {
+      "id": "manifest-validation#test299",
+      "type": "csvt:NegativeValidationTest",
+      "name": "invalid #0.0 12.34",
+      "comment": "A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test299-metadata.json",
+      "implicit": [
+        "test299.csv"
+      ]
+    },
+    {
+      "id": "manifest-validation#test300",
+      "type": "csvt:NegativeValidationTest",
+      "name": "invalid #0.0# 1",
+      "comment": "A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test300-metadata.json",
+      "implicit": [
+        "test300.csv"
+      ]
+    },
+    {
+      "id": "manifest-validation#test301",
+      "type": "csvt:NegativeValidationTest",
+      "name": "invalid #0.0# 12.345",
+      "comment": "A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test301-metadata.json",
+      "implicit": [
+        "test301.csv"
+      ]
+    },
+    {
+      "id": "manifest-validation#test302",
+      "type": "csvt:NegativeValidationTest",
+      "name": "invalid #0.0#,# 1",
+      "comment": "A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test302-metadata.json",
+      "implicit": [
+        "test302.csv"
+      ]
+    },
+    {
+      "id": "manifest-validation#test303",
+      "type": "csvt:NegativeValidationTest",
+      "name": "invalid #0.0#,# 12.345",
+      "comment": "A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test303-metadata.json",
+      "implicit": [
+        "test303.csv"
+      ]
+    },
+    {
+      "id": "manifest-validation#test304",
+      "type": "csvt:NegativeValidationTest",
+      "name": "invalid #0.0#,# 12.34,567",
+      "comment": "A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test304-metadata.json",
+      "implicit": [
+        "test304.csv"
+      ]
+    },
+    {
+      "id": "manifest-validation#test305",
+      "type": "csvt:PositiveValidationTest",
+      "name": "multiple values with same subject and property (unordered)",
+      "comment": "Values in separate columns using the same propertyUrl are kept in proper relative order.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test305-metadata.json",
+      "implicit": [
+        "test305.csv"
+      ]
+    },
+    {
+      "id": "manifest-validation#test306",
+      "type": "csvt:PositiveValidationTest",
+      "name": "multiple values with same subject and property (ordered)",
+      "comment": "Values in separate columns using the same propertyUrl are kept in proper relative order.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test306-metadata.json",
+      "implicit": [
+        "test306.csv"
+      ]
+    },
+    {
+      "id": "manifest-validation#test307",
+      "type": "csvt:PositiveValidationTest",
+      "name": "multiple values with same subject and property (ordered and unordered)",
+      "comment": "Values in separate columns using the same propertyUrl are kept in proper relative order.",
+      "approval": "rdft:Approved",
+      "option": {
+        "noProv": true
+      },
+      "action": "test307-metadata.json",
+      "implicit": [
+        "test307.csv"
+      ]
+    },
+    {
+      "id": "manifest-validation#test308",
+      "type": "csvt:NegativeValidationTest",
+      "name": "invalid datatype string",
+      "comment": "If the value of the datatype property is a string, it must be one of the built-in datatypes.",
+      "approval": "rdft:Proposed",
+      "option": {
+        "noProv": true
+      },
+      "action": "test308-metadata.json",
+      "implicit": [
+        "tree-ops.csv"
       ]
     }
   ]

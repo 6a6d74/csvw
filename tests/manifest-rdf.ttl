@@ -41,7 +41,11 @@
     :test216 :test217 :test218 :test219 :test220 :test221 :test222 :test223 :test224 :test225
     :test226 :test227 :test228 :test229 :test230 :test231 :test232 :test233 :test234 :test235
     :test236 :test237 :test238 :test242 :test243 :test244 :test245 :test246 :test247 :test248
-    :test251 :test252 :test253 :test259 :test260 :test261
+    :test251 :test252 :test253 :test259 :test260 :test261 :test263 :test264 :test266 :test267
+    :test268 :test269 :test270 :test271 :test272 :test273 :test274 :test275 :test276 :test277
+    :test278 :test279 :test280 :test281 :test282 :test283 :test284 :test285 :test286 :test287
+    :test288 :test289 :test290 :test291 :test292 :test293 :test294 :test295 :test296 :test297
+    :test298 :test299 :test300 :test301 :test302 :test303 :test304 :test305 :test306 :test307
   ) .
 
 :test001 a csvt:ToRdfTest;
@@ -954,7 +958,7 @@
   csvt:implicit <tree-ops.csv>;
   .
 
-:test100 a csvt:NegativeRdfTest;
+:test100 a csvt:ToRdfTestWithWarnings;
   mf:name "inconsistent array values: columns";
   rdfs:comment """If the supplied value of an array property is not an array (eg if it is an integer), compliant applications MUST issue a warning and proceed as if the property had been supplied with an empty array""";
   rdft:approval rdft:Approved;
@@ -962,6 +966,7 @@
     csvt:noProv true;
   ];
   mf:action <test100-metadata.json>;
+  mf:result <test100.ttl>;
   csvt:implicit <tree-ops.csv>;
   .
 
@@ -1220,7 +1225,7 @@
     <test121-user-metadata.json>;
   .
 
-:test122 a csvt:ToRdfTest;
+:test122 a csvt:ToRdfTestWithWarnings;
   mf:name "link-metadata not describing file uses file-metadata";
   rdfs:comment """If the metadata file found at this location does not explicitly include a reference to the requested tabular data file then it MUST be ignored.""";
   rdft:approval rdft:Approved;
@@ -1234,7 +1239,7 @@
     <test122-linked-metadata.json>;
   .
 
-:test123 a csvt:ToRdfTest;
+:test123 a csvt:ToRdfTestWithWarnings;
   mf:name "file-metadata not describing file uses directory-metadata";
   rdfs:comment """If the metadata file found at this location does not explicitly include a reference to the requested tabular data file then it MUST be ignored.""";
   rdft:approval rdft:Approved;
@@ -2742,4 +2747,530 @@
   ];
   mf:action <test261-metadata.json>;
   csvt:implicit <test261.csv>;
+  .
+
+:test263 a csvt:ToRdfTest;
+  mf:name "@type on a common property can be a built-in type";
+  rdfs:comment """The value of any member of `@type` MUST be either a _term_ defined in [csvw-context], a _prefixed name_ where the prefix is a term defined in [csvw-context], or an absolute URL.""";
+  rdft:approval rdft:Approved;
+  csvt:option [
+    csvt:noProv true;
+  ];
+  mf:action <test263-metadata.json>;
+  mf:result <test263.ttl>;
+  csvt:implicit <tree-ops.csv>;
+  .
+
+:test264 a csvt:ToRdfTest;
+  mf:name "@type on a common property can be a CURIE if the prefix is one of the built-in ones";
+  rdfs:comment """The value of any member of `@type` MUST be either a _term_ defined in [csvw-context], a _prefixed name_ where the prefix is a term defined in [csvw-context], or an absolute URL.""";
+  rdft:approval rdft:Approved;
+  csvt:option [
+    csvt:noProv true;
+  ];
+  mf:action <test264-metadata.json>;
+  mf:result <test264.ttl>;
+  csvt:implicit <tree-ops.csv>;
+  .
+
+:test266 a csvt:ToRdfTestWithWarnings;
+  mf:name "`null` contains an array of (valid) string & (invalid) numeric values";
+  rdfs:comment """Processors MUST issue a warning if a property is set to an invalid value type""";
+  rdft:approval rdft:Approved;
+  csvt:option [
+    csvt:noProv true;
+  ];
+  mf:action <test266-metadata.json>;
+  mf:result <test266.ttl>;
+  csvt:implicit <tree-ops.csv>;
+  .
+
+:test267 a csvt:NegativeRdfTest;
+  mf:name "@id on datatype is invalid (eg starts with _:)";
+  rdfs:comment """It MUST NOT start with `_:` and it MUST NOT be the URL of a built-in datatype.""";
+  rdft:approval rdft:Approved;
+  csvt:option [
+    csvt:noProv true;
+  ];
+  mf:action <test267-metadata.json>;
+  csvt:implicit <tree-ops.csv>;
+  .
+
+:test268 a csvt:ToRdfTest;
+  mf:name "`base` missing on datatype (defaults to string)";
+  rdfs:comment """An atomic property that contains a single string: the name of one of the built-in datatypes, as listed above (and which are defined as terms in the default context). Its default is string.""";
+  rdft:approval rdft:Approved;
+  csvt:option [
+    csvt:noProv true;
+  ];
+  mf:action <test268-metadata.json>;
+  mf:result <test268.ttl>;
+  csvt:implicit <tree-ops.csv>;
+  .
+
+:test269 a csvt:ToRdfTestWithWarnings;
+  mf:name "`format` for a boolean datatype is a string but in the wrong form (eg YN)";
+  rdfs:comment """If the datatype base for a cell is `boolean`, the datatype format annotation provides the true value followed by the false value, separated by `|`. If the format does not follow this syntax, implementations MUST issue a warning and proceed as if no format had been provided.""";
+  rdft:approval rdft:Approved;
+  csvt:option [
+    csvt:noProv true;
+  ];
+  mf:action <test269-metadata.json>;
+  mf:result <test269.ttl>;
+  csvt:implicit <test269.csv>;
+  .
+
+:test270 a csvt:ToRdfTestWithWarnings;
+  mf:name "transformation includes an invalid property (eg foo)";
+  rdfs:comment """All terms used within a metadata document MUST be defined in [csvw-context] defined for this specification""";
+  rdft:approval rdft:Approved;
+  csvt:option [
+    csvt:noProv true;
+  ];
+  mf:action <test270-metadata.json>;
+  mf:result <test270.ttl>;
+  csvt:implicit <tree-ops.csv>;
+  .
+
+:test271 a csvt:NegativeRdfTest;
+  mf:name "foreign key includes an invalid property (eg `dc:description`)";
+  rdfs:comment """A foreign key definition is a JSON object that must contain only the following properties. . .""";
+  rdft:approval rdft:Approved;
+  csvt:option [
+    csvt:noProv true;
+  ];
+  mf:action <test271-metadata.json>;
+  csvt:implicit <test271.csv>,
+    <countries.csv>;
+  .
+
+:test272 a csvt:NegativeRdfTest;
+  mf:name "foreign key reference includes an invalid property (eg `dc:description`)";
+  rdfs:comment """A foreign key definition is a JSON object that must contain only the following properties. . .""";
+  rdft:approval rdft:Approved;
+  csvt:option [
+    csvt:noProv true;
+  ];
+  mf:action <test272-metadata.json>;
+  csvt:implicit <test272.csv>,
+    <countries.csv>;
+  .
+
+:test273 a csvt:ToRdfTest;
+  mf:name "`@base` set in `@context` overriding eg CSV location";
+  rdfs:comment """If present, its value MUST be a string that is interpreted as a URL which is resolved against the location of the metadata document to provide the **base URL** for other URLs in the metadata document.""";
+  rdft:approval rdft:Approved;
+  csvt:option [
+    csvt:noProv true;
+  ];
+  mf:action <test273-metadata.json>;
+  mf:result <test273.ttl>;
+  csvt:implicit <test273/action.csv>;
+  .
+
+:test274 a csvt:NegativeRdfTest;
+  mf:name "`@context` object includes properties other than `@base` and `@language`";
+  rdfs:comment """The `@context` MUST have one of the following values: An array composed of a string followed by an object, where the string is `http://www.w3.org/ns/csvw` and the object represents a local context definition, which is restricted to contain either or both of the following members.""";
+  rdft:approval rdft:Approved;
+  csvt:option [
+    csvt:noProv true;
+  ];
+  mf:action <test274-metadata.json>;
+  csvt:implicit <tree-ops.csv>;
+  .
+
+:test275 a csvt:ToRdfTestWithWarnings;
+  mf:name "property acceptable on column appears on table group";
+  rdfs:comment """Table Group may only use defined properties.""";
+  rdft:approval rdft:Approved;
+  csvt:option [
+    csvt:noProv true;
+  ];
+  mf:action <test275-metadata.json>;
+  mf:result <test275.ttl>;
+  csvt:implicit <tree-ops.csv>;
+  .
+
+:test276 a csvt:ToRdfTestWithWarnings;
+  mf:name "property acceptable on column appears on table";
+  rdfs:comment """Table may only use defined properties.""";
+  rdft:approval rdft:Approved;
+  csvt:option [
+    csvt:noProv true;
+  ];
+  mf:action <test276-metadata.json>;
+  mf:result <test276.ttl>;
+  csvt:implicit <tree-ops.csv>;
+  .
+
+:test277 a csvt:ToRdfTestWithWarnings;
+  mf:name "property acceptable on table appears on column";
+  rdfs:comment """Column may only use defined properties.""";
+  rdft:approval rdft:Approved;
+  csvt:option [
+    csvt:noProv true;
+  ];
+  mf:action <test277-metadata.json>;
+  mf:result <test277.ttl>;
+  csvt:implicit <tree-ops.csv>;
+  .
+
+:test278 a csvt:ToRdfTestWithWarnings;
+  mf:name "CSV has more headers than there are columns in the metadata";
+  rdfs:comment """Two schemas are compatible if they have the same number of non-virtual column descriptions, and the non-virtual column descriptions at the same index within each are compatible with each other.""";
+  rdft:approval rdft:Approved;
+  csvt:option [
+    csvt:noProv true;
+  ];
+  mf:action <test278-metadata.json>;
+  mf:result <test278.ttl>;
+  csvt:implicit <tree-ops.csv>;
+  .
+
+:test279 a csvt:ToRdfTestWithWarnings;
+  mf:name "duration not matching xsd pattern";
+  rdfs:comment """Value MUST be a valid xsd:duration.""";
+  rdft:approval rdft:Approved;
+  csvt:option [
+    csvt:noProv true;
+  ];
+  mf:action <test279-metadata.json>;
+  mf:result <test279.ttl>;
+  csvt:implicit <test279.csv>;
+  .
+
+:test280 a csvt:ToRdfTestWithWarnings;
+  mf:name "dayTimeDuration not matching xsd pattern";
+  rdfs:comment """Value MUST be a valid xsd:dayTimeDuration.""";
+  rdft:approval rdft:Approved;
+  csvt:option [
+    csvt:noProv true;
+  ];
+  mf:action <test280-metadata.json>;
+  mf:result <test280.ttl>;
+  csvt:implicit <test280.csv>;
+  .
+
+:test281 a csvt:ToRdfTestWithWarnings;
+  mf:name "yearMonthDuration not matching xsd pattern";
+  rdfs:comment """Value MUST be a valid xsd:yearMonthDuration.""";
+  rdft:approval rdft:Approved;
+  csvt:option [
+    csvt:noProv true;
+  ];
+  mf:action <test281-metadata.json>;
+  mf:result <test281.ttl>;
+  csvt:implicit <test281.csv>;
+  .
+
+:test282 a csvt:ToRdfTest;
+  mf:name "valid number patterns";
+  rdfs:comment """A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.""";
+  rdft:approval rdft:Approved;
+  csvt:option [
+    csvt:noProv true;
+  ];
+  mf:action <test282-metadata.json>;
+  mf:result <test282.ttl>;
+  csvt:implicit <test282.csv>;
+  .
+
+:test283 a csvt:ToRdfTest;
+  mf:name "valid number patterns (signs and percent/permille)";
+  rdfs:comment """A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.""";
+  rdft:approval rdft:Approved;
+  csvt:option [
+    csvt:noProv true;
+  ];
+  mf:action <test283-metadata.json>;
+  mf:result <test283.ttl>;
+  csvt:implicit <test283.csv>;
+  .
+
+:test284 a csvt:ToRdfTest;
+  mf:name "valid number patterns (grouping)";
+  rdfs:comment """A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.""";
+  rdft:approval rdft:Approved;
+  csvt:option [
+    csvt:noProv true;
+  ];
+  mf:action <test284-metadata.json>;
+  mf:result <test284.ttl>;
+  csvt:implicit <test284.csv>;
+  .
+
+:test285 a csvt:ToRdfTest;
+  mf:name "valid number patterns (fractional grouping)";
+  rdfs:comment """A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.""";
+  rdft:approval rdft:Approved;
+  csvt:option [
+    csvt:noProv true;
+  ];
+  mf:action <test285-metadata.json>;
+  mf:result <test285.ttl>;
+  csvt:implicit <test285.csv>;
+  .
+
+:test286 a csvt:ToRdfTestWithWarnings;
+  mf:name "invalid ##0 1,234";
+  rdfs:comment """A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.""";
+  rdft:approval rdft:Approved;
+  csvt:option [
+    csvt:noProv true;
+  ];
+  mf:action <test286-metadata.json>;
+  mf:result <test286.ttl>;
+  csvt:implicit <test286.csv>;
+  .
+
+:test287 a csvt:ToRdfTestWithWarnings;
+  mf:name "invalid ##0 123.4";
+  rdfs:comment """A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.""";
+  rdft:approval rdft:Approved;
+  csvt:option [
+    csvt:noProv true;
+  ];
+  mf:action <test287-metadata.json>;
+  mf:result <test287.ttl>;
+  csvt:implicit <test287.csv>;
+  .
+
+:test288 a csvt:ToRdfTestWithWarnings;
+  mf:name "invalid #,#00 1";
+  rdfs:comment """A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.""";
+  rdft:approval rdft:Approved;
+  csvt:option [
+    csvt:noProv true;
+  ];
+  mf:action <test288-metadata.json>;
+  mf:result <test288.ttl>;
+  csvt:implicit <test288.csv>;
+  .
+
+:test289 a csvt:ToRdfTestWithWarnings;
+  mf:name "invalid #,#00 1234";
+  rdfs:comment """A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.""";
+  rdft:approval rdft:Approved;
+  csvt:option [
+    csvt:noProv true;
+  ];
+  mf:action <test289-metadata.json>;
+  mf:result <test289.ttl>;
+  csvt:implicit <test289.csv>;
+  .
+
+:test290 a csvt:ToRdfTestWithWarnings;
+  mf:name "invalid #,#00 12,34";
+  rdfs:comment """A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.""";
+  rdft:approval rdft:Approved;
+  csvt:option [
+    csvt:noProv true;
+  ];
+  mf:action <test290-metadata.json>;
+  mf:result <test290.ttl>;
+  csvt:implicit <test290.csv>;
+  .
+
+:test291 a csvt:ToRdfTestWithWarnings;
+  mf:name "invalid #,#00 12,34,567";
+  rdfs:comment """A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.""";
+  rdft:approval rdft:Approved;
+  csvt:option [
+    csvt:noProv true;
+  ];
+  mf:action <test291-metadata.json>;
+  mf:result <test291.ttl>;
+  csvt:implicit <test291.csv>;
+  .
+
+:test292 a csvt:ToRdfTestWithWarnings;
+  mf:name "invalid #,##,#00 1";
+  rdfs:comment """A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.""";
+  rdft:approval rdft:Approved;
+  csvt:option [
+    csvt:noProv true;
+  ];
+  mf:action <test292-metadata.json>;
+  mf:result <test292.ttl>;
+  csvt:implicit <test292.csv>;
+  .
+
+:test293 a csvt:ToRdfTestWithWarnings;
+  mf:name "invalid #,##,#00 1234";
+  rdfs:comment """A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.""";
+  rdft:approval rdft:Approved;
+  csvt:option [
+    csvt:noProv true;
+  ];
+  mf:action <test293-metadata.json>;
+  mf:result <test293.ttl>;
+  csvt:implicit <test293.csv>;
+  .
+
+:test294 a csvt:ToRdfTestWithWarnings;
+  mf:name "invalid #,##,#00 12,34";
+  rdfs:comment """A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.""";
+  rdft:approval rdft:Approved;
+  csvt:option [
+    csvt:noProv true;
+  ];
+  mf:action <test294-metadata.json>;
+  mf:result <test294.ttl>;
+  csvt:implicit <test294.csv>;
+  .
+
+:test295 a csvt:ToRdfTestWithWarnings;
+  mf:name "invalid #,##,#00 1,234,567";
+  rdfs:comment """A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.""";
+  rdft:approval rdft:Approved;
+  csvt:option [
+    csvt:noProv true;
+  ];
+  mf:action <test295-metadata.json>;
+  mf:result <test295.ttl>;
+  csvt:implicit <test295.csv>;
+  .
+
+:test296 a csvt:ToRdfTestWithWarnings;
+  mf:name "invalid #0.# 12.34";
+  rdfs:comment """A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.""";
+  rdft:approval rdft:Approved;
+  csvt:option [
+    csvt:noProv true;
+  ];
+  mf:action <test296-metadata.json>;
+  mf:result <test296.ttl>;
+  csvt:implicit <test296.csv>;
+  .
+
+:test297 a csvt:ToRdfTestWithWarnings;
+  mf:name "invalid #0.# 1,234.5";
+  rdfs:comment """A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.""";
+  rdft:approval rdft:Approved;
+  csvt:option [
+    csvt:noProv true;
+  ];
+  mf:action <test297-metadata.json>;
+  mf:result <test297.ttl>;
+  csvt:implicit <test297.csv>;
+  .
+
+:test298 a csvt:ToRdfTestWithWarnings;
+  mf:name "invalid #0.0 1";
+  rdfs:comment """A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.""";
+  rdft:approval rdft:Approved;
+  csvt:option [
+    csvt:noProv true;
+  ];
+  mf:action <test298-metadata.json>;
+  mf:result <test298.ttl>;
+  csvt:implicit <test298.csv>;
+  .
+
+:test299 a csvt:ToRdfTestWithWarnings;
+  mf:name "invalid #0.0 12.34";
+  rdfs:comment """A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.""";
+  rdft:approval rdft:Approved;
+  csvt:option [
+    csvt:noProv true;
+  ];
+  mf:action <test299-metadata.json>;
+  mf:result <test299.ttl>;
+  csvt:implicit <test299.csv>;
+  .
+
+:test300 a csvt:ToRdfTestWithWarnings;
+  mf:name "invalid #0.0# 1";
+  rdfs:comment """A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.""";
+  rdft:approval rdft:Approved;
+  csvt:option [
+    csvt:noProv true;
+  ];
+  mf:action <test300-metadata.json>;
+  mf:result <test300.ttl>;
+  csvt:implicit <test300.csv>;
+  .
+
+:test301 a csvt:ToRdfTestWithWarnings;
+  mf:name "invalid #0.0# 12.345";
+  rdfs:comment """A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.""";
+  rdft:approval rdft:Approved;
+  csvt:option [
+    csvt:noProv true;
+  ];
+  mf:action <test301-metadata.json>;
+  mf:result <test301.ttl>;
+  csvt:implicit <test301.csv>;
+  .
+
+:test302 a csvt:ToRdfTestWithWarnings;
+  mf:name "invalid #0.0#,# 1";
+  rdfs:comment """A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.""";
+  rdft:approval rdft:Approved;
+  csvt:option [
+    csvt:noProv true;
+  ];
+  mf:action <test302-metadata.json>;
+  mf:result <test302.ttl>;
+  csvt:implicit <test302.csv>;
+  .
+
+:test303 a csvt:ToRdfTestWithWarnings;
+  mf:name "invalid #0.0#,# 12.345";
+  rdfs:comment """A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.""";
+  rdft:approval rdft:Approved;
+  csvt:option [
+    csvt:noProv true;
+  ];
+  mf:action <test303-metadata.json>;
+  mf:result <test303.ttl>;
+  csvt:implicit <test303.csv>;
+  .
+
+:test304 a csvt:ToRdfTestWithWarnings;
+  mf:name "invalid #0.0#,# 12.34,567";
+  rdfs:comment """A number format pattern as defined in [UAX35]. Implementations MUST recognise number format patterns containing the symbols `0`, `#`, the specified decimalChar (or `.` if unspecified), the specified groupChar (or `,` if unspecified), `E`, `+`, `%` and `&permil;`.""";
+  rdft:approval rdft:Approved;
+  csvt:option [
+    csvt:noProv true;
+  ];
+  mf:action <test304-metadata.json>;
+  mf:result <test304.ttl>;
+  csvt:implicit <test304.csv>;
+  .
+
+:test305 a csvt:ToRdfTest;
+  mf:name "multiple values with same subject and property (unordered)";
+  rdfs:comment """Values in separate columns using the same propertyUrl are kept in proper relative order.""";
+  rdft:approval rdft:Approved;
+  csvt:option [
+    csvt:noProv true;
+  ];
+  mf:action <test305-metadata.json>;
+  mf:result <test305.ttl>;
+  csvt:implicit <test305.csv>;
+  .
+
+:test306 a csvt:ToRdfTest;
+  mf:name "multiple values with same subject and property (ordered)";
+  rdfs:comment """Values in separate columns using the same propertyUrl are kept in proper relative order.""";
+  rdft:approval rdft:Approved;
+  csvt:option [
+    csvt:noProv true;
+  ];
+  mf:action <test306-metadata.json>;
+  mf:result <test306.ttl>;
+  csvt:implicit <test306.csv>;
+  .
+
+:test307 a csvt:ToRdfTest;
+  mf:name "multiple values with same subject and property (ordered and unordered)";
+  rdfs:comment """Values in separate columns using the same propertyUrl are kept in proper relative order.""";
+  rdft:approval rdft:Approved;
+  csvt:option [
+    csvt:noProv true;
+  ];
+  mf:action <test307-metadata.json>;
+  mf:result <test307.ttl>;
+  csvt:implicit <test307.csv>;
   .
